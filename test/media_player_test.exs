@@ -3,6 +3,6 @@ defmodule MediaPlayerTest do
   doctest MediaPlayer
 
   test "greets the world" do
-    assert MediaPlayer.hello() == :world
+    assert MediaPlayer.awesam() == "me so aweSAM :>"
   end
 end

@@ -4,15 +4,15 @@ defmodule MediaPlayer.Config.Database do
 
   def start_link do
     options = [
-      username: System.get_env(SCYLLADB_USERNAME),
-      password: System.get_env(SCYLLADB_PASSWORD)
+      username: System.get_env("SCYLLADB_USERNAME"),
+      password: System.get_env("SCYLLADB_PASSWORD")
     ]
 
     {:ok, cluster} =
       Xandra.Cluster.start_link(
         sync_connect: :infinity,
         authentication: {Xandra.Authenticator.Password, options},
-        nodes: System.get_env(SCYLLA_NODE) |> String.split(",")
+        nodes: System.get_env("SCYLLADB_NODE") |> String.replace("\r", "") |> String.split(",")
       )
 
     cluster

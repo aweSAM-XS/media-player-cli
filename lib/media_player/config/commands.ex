@@ -23,14 +23,14 @@ defmodule MediaPlayer.Commands do
     add_from(title, album, artist, created)
   end
 
-  defp trim(chars) do
+  def trim(chars) do
     chars
     |> List.to_string()
     |> String.trim()
   end
 
   def list() do
-    query = "SELECT id, title, album,artisy, created_at FROM #{keyspace()}.#{table()};"
+    query = "SELECT id, title, album, artist, created_at FROM #{keyspace()}.#{table()};"
 
     Actions.run_query(query)
     |> Enum.each(fn %{
@@ -64,7 +64,7 @@ defmodule MediaPlayer.Commands do
         %{id: id, title: title, album: album, artist: artist, created_at: created_at}
       end)
 
-    {input, _} = IO.gets("Enter the index of the song you want to delete: ") |> Integer.parse()
+    {input, _} = IO.gets("Enter the index of the song you want to delete: ") |> trim() |> Integer.parse()
 
     case Enum.at(songs, input - 1) do
       %{} = song ->
@@ -87,8 +87,8 @@ defmodule MediaPlayer.Commands do
     ) VALUES (
       #{UUID.uuid4()},
       'Test Song #{some_id}',
-      'Test Artist #{some_id}',
       'Test Album #{some_id}',
+      'Test Artist #{some_id}',
       '#{current_date}'
     );"
   end
@@ -98,7 +98,7 @@ defmodule MediaPlayer.Commands do
     cluster = MediaPlayer.Config.Database.start_link()
 
     # Simple stress test
-    1..100_000
+    1..10_000
     |> Task.async_stream(
       fn id ->
         IO.puts("[#{id}] Adding seed")

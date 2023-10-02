@@ -24,3 +24,6 @@ media_player-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Environment variables
+.env

@@ -1,13 +1,15 @@
 defmodule MediaPlayer do
   alias MediaPlayer.Commands, as: Commands
 
-  IO.puts("Me so aweSAM")
+  # Dotenv.load()
+  # sam = String.split("#{System.get_env("SCYLLADB_NODE")}, #{System.get_env("SCYLLADB_USERNAME")}" , ",")
+  # IO.puts(sam)
 
   def loop do
     IO.puts("-------------------------------------")
     IO.puts("Commands: !add | !list | !delete | !stress | !exit")
     IO.puts("Type any command: ")
-    command = IO.gets("") |> String.trim()
+    command = IO.gets("") |> Commands.trim
 
     case command do
       "!add" ->
@@ -54,4 +56,6 @@ defmodule MediaPlayer do
 
     loop()
   end
+
+  def awesam, do: "me so aweSAM :>"
 end
